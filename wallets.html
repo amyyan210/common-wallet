@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons"/>
+    <title>Wallets</title>
+</head>
+<body>
+
+
+    <div id="app" class="container">
+        <div class="md-layout md-gutter">
+            <div class="md-layout-item">
+                <md-field>
+                    <label for="currencies">Currencies</label>
+                    <md-select v-model="selectedCurrency" name="currencies" id="currencies">
+                        <md-option v-for="currency in currencies" v-bind:value="currency">
+                            {{ currency }}
+                        </md-option>
+                    </md-select>
+                </md-field>
+            </div>
+            <md-list class="collection">
+                <md-list-item v-for="wallet in wallets" class="collection-item md-list-item-text"
+                  v-if="wallet.currencies.indexOf(selectedCurrency) > -1">
+                    {{ wallet.name }}
+                    <!--<md-icon>move_to_inbox</md-icon>-->
+                </md-list-item>
+            </md-list>
+
+        </div>
+
+    </div>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://unpkg.com/vue"></script>
+<script src="https://unpkg.com/vue-material@beta"></script>
+<script>
+
+    var wallets = [
+        { name: 'Guarda', currencies: ['ETH', 'BCH', 'BTC', 'QTCM', 'LTC', 'BTG', 'SBTC', 'DCT', 'BTS', 'ERC20', 'CLO', 'ZEC', 'XRP', 'DOGE', 'DASH']},
+        { name: 'myEther', currencies: ['ETH', 'ERC20']},
+        { name: 'Luno', currencies: ['ETH', 'BTC']}
+    ]
+
+    var allCurrencies = [];
+
+    for(var i = 0; i < wallets.length; i++){
+        $.merge(allCurrencies, wallets[i].currencies);
+        $.unique(allCurrencies);
+    }
+
+    Vue.use(VueMaterial.default)
+
+    var app = new Vue({
+        el: '#app',
+        data: {
+            selectedCurrency: null,
+            wallets: wallets,
+            currencies: allCurrencies
+        }
+    })
+</script>
+</body>
+
+</html>
