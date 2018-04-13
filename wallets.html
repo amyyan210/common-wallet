@@ -14,9 +14,10 @@
 
 
     <div id="app" class="container">
+
         <div class="md-layout md-gutter">
-            <div class="md-layout-item">
-                <md-field>
+            <div class="md-layout-item row">
+                <md-field class="col s12 m12 l12">
                     <label for="currencies">Currencies</label>
                     <md-select v-model="selectedCurrency" name="currencies" id="currencies">
                         <md-option v-for="currency in currencies" v-bind:value="currency">
@@ -25,15 +26,19 @@
                     </md-select>
                 </md-field>
             </div>
-            <md-list class="collection">
-                <md-list-item v-for="wallet in wallets" class="collection-item md-list-item-text"
-                  v-if="wallet.currencies.indexOf(selectedCurrency) > -1">
-                    {{ wallet.name }}
-                    <!--<md-icon>move_to_inbox</md-icon>-->
-                </md-list-item>
-            </md-list>
+
+
 
         </div>
+
+        <md-list class="collection row">
+            <md-list-item v-for="wallet in wallets" class="collection-item md-list-item-text col s12 m12 l12"
+                          v-if="wallet.currencies.indexOf(selectedCurrency) > -1">
+                <img v-bind:src="wallet.icon"/>
+                <p>{{ wallet.name }}</p>
+                <a v-bind:href="wallet.url" target="_blank">Pay</a>
+            </md-list-item>
+        </md-list>
 
     </div>
 
@@ -46,9 +51,24 @@
 <script>
 
     var wallets = [
-        { name: 'Guarda', currencies: ['ETH', 'BCH', 'BTC', 'QTCM', 'LTC', 'BTG', 'SBTC', 'DCT', 'BTS', 'ERC20', 'CLO', 'ZEC', 'XRP', 'DOGE', 'DASH']},
-        { name: 'myEther', currencies: ['ETH', 'ERC20']},
-        { name: 'Luno', currencies: ['ETH', 'BTC']}
+        { name: 'Guarda', icon: 'img/guarda_wallet.jpg', url: 'https://guarda.co/',
+            currencies: ['ETH', 'BCH', 'BTC', 'QTCM', 'LTC', 'BTG', 'SBTC', 'DCT', 'BTS', 'ERC20', 'CLO', 'ZEC', 'XRP', 'DOGE', 'DASH']},
+        { name: 'myEther', icon: 'img/myetherwallet.png', url: 'https://www.myetherwallet.com/',
+            currencies: ['ETH', 'ERC20']},
+        { name: 'Luno', icon: 'img/luno.png', url: 'https://www.luno.com/',
+            currencies: ['ETH', 'BTC']},
+        { name: 'Blockchain Wallet', icon: 'img/blockchain.png', url: 'https://blockchain.info/wallet/#/',
+            currencies: ['BTC', 'BCH', 'ETH']},
+        { name: 'BitPanda', icon: 'img/bitpanda.jpg', url: 'https://www.bitpanda.com/?ref=1020873336776582718',
+            currencies: ['BTC', 'ETH', 'LTC', 'DASH', 'XRP', 'BCH']},
+        { name: 'BTC Wallet', icon: 'img/btccom.png', url: 'https://wallet.btc.com/',
+            currencies: ['BCH', 'BTC']},
+        { name: 'Block.io Wallet', icon: 'img/blockio.png', url: 'https://block.io/',
+            currencies: ['BTC', 'LTC', 'DOGE']},
+        { name: 'Bitforx Wallet', icon: 'img/bitforx_wallet.png', url: 'https://bitforx.com/',
+            currencies: ['BTC']},
+        { name: 'Holy Transaction', icon: 'img/holytransaction.png', url: 'https://holytransaction.com/',
+            currencies: ['BTC', 'LTC', 'DOGE', 'DASH', 'ETH', 'DCR', 'ZEC', 'SYS', 'FAIR', 'GAME', 'PPC', 'GRC', 'BLK']}
     ]
 
     var allCurrencies = [];
