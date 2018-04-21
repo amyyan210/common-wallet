@@ -50,6 +50,61 @@
 <script src="https://unpkg.com/vue-material@beta"></script>
 <script>
 
+    var masterListOfCurrencies = [
+        {name: 'Bitcoin', ticker: 'BTC', icon: 'img/currencies/Bitcoin.png'},
+        {name: 'Ethereum', ticker: 'ETH', icon: 'img/currencies/Ethereum.png'},
+        {name: 'ERC20', ticker:'ERC20', icon: 'img/currencies/Ethereum.png'},
+        {name: 'Ripple', ticker: 'XRP', icon: 'img/currencies/Ripple.png'},
+        {name: 'Bitcoincash', ticker: 'BCH', icon: 'img/currencies/Bitcoincash.png'},
+        {name: 'Litecoin', ticker: 'LTC', icon: 'img/currencies/Litecoin.png'},
+        {name: 'Eos', ticker: 'EOS', icon: 'img/currencies/Eos.png'},
+        {name: 'Stellarlumens', ticker: 'XLM', icon: 'img/currencies/Stellarlumens.png'},
+        {name: 'Neo', ticker: 'NEO', icon: 'img/currencies/Neo.png'},
+        {name: 'Iota', ticker: 'IOT', icon: 'img/currencies/Iota.png'},
+        { name: 'Monero', ticker: 'XMR', icon: 'img/currencies/Monero.png'},
+        { name: 'Dash', ticker: 'DASH', icon: 'img/currencies/Dash.png'},
+        { name: 'Nem', ticker: 'XEM', icon: 'img/currencies/Nem.png'},
+        { name: 'Tron', ticker: 'TRX', icon: 'img/currencies/Tron.png'},
+        { name: 'Omisego', ticker: 'OMG', icon: 'img/currencies/Omisego.png'},
+        { name: 'Qtum', ticker: 'QTUM', icon: 'img/currencies/Qtum.png'},
+        { name: 'Ethereumclassic', ticker: 'ETC', icon: 'img/currencies/Ethereumclassic.png'},
+        { name: 'Binancecoin', ticker: 'BNB', icon: 'img/currencies/Binancecoin.png'},
+        { name: 'Lisk', ticker: 'LSK', icon: 'img/currencies/Lisk.png'},
+        { name: 'Verge', ticker: 'XVG', icon: 'img/currencies/Verge.png'},
+        { name: 'Zcash', ticker: 'ZEC', icon: 'img/currencies/Zcash.png'},
+        { name: 'Bitcoingold', ticker: 'BTG', icon: 'img/currencies/Bitcoingold.png'},
+        { name: 'Status', ticker: 'SNT', icon: 'img/currencies/Status.png'},
+        { name: '0x', ticker: 'ZRX', icon: 'img/currencies/0x.png'},
+        { name: 'Steem', ticker: 'STEEM', icon: 'img/currencies/Steem.png'},
+        { name: 'Bitshares', ticker: 'BTS', icon: 'img/currencies/Bitshares.png'},
+        { name: 'Bat', ticker: 'BAT', icon: 'img/currencies/Bat.png'},
+        { name: 'Dogecoin', ticker: 'DOGE', icon: 'img/currencies/Dogecoin.png'},
+        { name: 'Siacoin', ticker: 'SC', icon: 'img/currencies/Siacoin.png'},
+        { name: 'Stratis', ticker: 'STRAT', icon: 'img/currencies/Stratis.png'},
+        { name: 'Waves', ticker: 'WAVES', icon: 'img/currencies/Waves.png'},
+        { name: 'Golem', ticker: 'GNT', icon: 'img/currencies/Golem.png'},
+        { name: 'Salt', ticker: 'SALT', icon: 'img/currencies/Salt.png'},
+        { name: 'Monaco', ticker: 'MCO', icon: 'img/currencies/Monaco.png'},
+        { name: 'Kyber', ticker: 'KNC', icon: 'img/currencies/Kyber.png'},
+        { name: 'Metal', ticker: 'MTL', icon: 'img/currencies/Metal.png'},
+        { name: 'Enigma', ticker: 'ENG', icon: 'img/currencies/Enigma.png'},
+        { name: 'Powerledger', ticker: 'POWR', icon: 'img/currencies/Powerledger.png'},
+        { name: 'Storj', ticker: 'STORJ', icon: 'img/currencies/Storj.png'},
+        { name: 'Adex', ticker: 'ADX', icon: 'img/currencies/Adex.png'},
+        { name: 'Singulardtv', ticker: 'SNGLS', icon: 'img/currencies/Singulardtv.png'},
+        { name: 'Ethos', ticker: 'BQX', icon: 'img/currencies/Ethos.png'},
+        { name: 'Ardor', ticker: 'ARDR', icon: 'img/currencies/Ardor.png'},
+        { name: 'Reddcoin', ticker: 'RDD', icon: 'img/currencies/Reddcoin.png'},
+        { name: 'Fairgame', ticker: 'FAIR', icon: 'img/currencies/Fairgame.png'},
+        { name: 'Gas', ticker: 'GAS', icon: 'img/currencies/Gas.png'},
+        { name: 'Civic', ticker: 'CVC', icon: 'img/currencies/Civic.png'},
+        { name: 'Nxt', ticker: 'NXT', icon: 'img/currencies/Nxt.png'},
+        { name: 'Bytecoin', ticker: 'BCN', icon: 'img/currencies/Bytecoin.png'}
+
+
+
+    ]
+
     var wallets = [
         { id: 1, name: 'Guarda', icon: 'img/guarda_wallet.jpg', url: 'https://guarda.co/app',
             currencies: ['ETH', 'BCH', 'BTC', 'QTCM', 'LTC', 'BTG', 'SBTC', 'DCT', 'BTS', 'ERC20', 'CLO', 'ZEC', 'XRP', 'DOGE', 'DASH']},
@@ -175,6 +230,10 @@
         $.merge(allCurrencies, wallets[i].currencies);
         $.unique(allCurrencies);
     }
+
+    console.log("Available currencies = " + allCurrencies.length);
+    console.log("Master list of currencies = " + masterListOfCurrencies.length);
+
 
     Vue.use(VueMaterial.default)
 
