@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/vue-material.min.css">
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:400,500,700,400italic|Material+Icons"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons"/>
     <title>Wallets</title>
 </head>
 <body>
@@ -17,24 +17,24 @@
 
         <div class="md-layout md-gutter">
             <div class="md-layout-item row">
-                <md-field class="col s12 m12 l12">
+                <md-field>
                     <label for="currencies">Currencies</label>
                     <md-select v-model="selectedCurrency" name="currencies" id="currencies">
-                        <md-option v-for="currency in currencies" v-bind:value="currency">
-                            {{ currency }}
+                        <md-option v-for="currency in currencies" v-bind:value="currency.ticker" v-html="'<div class=&quot;md-avatar md-theme-default&quot;><img src=' + currency.icon + '></div> ' + currency.name + ' (' + currency.ticker + ')'">
+                            {{ currency.name }} ({{ currency.ticker }})
                         </md-option>
                     </md-select>
                 </md-field>
             </div>
 
-
-
         </div>
 
         <md-list class="collection row">
-            <md-list-item v-for="wallet in wallets" class="collection-item md-list-item-text col s12 m12 l12"
-                          v-if="wallet.currencies.indexOf(selectedCurrency) > -1">
-                <img v-bind:src="wallet.icon"/>
+            <md-list-item v-for="wallet in wallets"
+                v-if="wallet.currencies.indexOf(selectedCurrency) > -1">
+                <md-avatar>
+                    <img v-bind:src="wallet.icon"/>
+                </md-avatar>
                 <p>{{ wallet.name }}</p>
                 <a v-bind:href="wallet.url" target="_blank">Pay</a>
             </md-list-item>
@@ -51,16 +51,16 @@
 <script>
 
     var masterListOfCurrencies = [
-        {name: 'Bitcoin', ticker: 'BTC', icon: 'img/currencies/Bitcoin.png'},
-        {name: 'Ethereum', ticker: 'ETH', icon: 'img/currencies/Ethereum.png'},
-        {name: 'ERC20', ticker:'ERC20', icon: 'img/currencies/Ethereum.png'},
-        {name: 'Ripple', ticker: 'XRP', icon: 'img/currencies/Ripple.png'},
-        {name: 'Bitcoincash', ticker: 'BCH', icon: 'img/currencies/Bitcoincash.png'},
-        {name: 'Litecoin', ticker: 'LTC', icon: 'img/currencies/Litecoin.png'},
-        {name: 'Eos', ticker: 'EOS', icon: 'img/currencies/Eos.png'},
-        {name: 'Stellarlumens', ticker: 'XLM', icon: 'img/currencies/Stellarlumens.png'},
-        {name: 'Neo', ticker: 'NEO', icon: 'img/currencies/Neo.png'},
-        {name: 'Iota', ticker: 'IOT', icon: 'img/currencies/Iota.png'},
+        { name: 'Bitcoin', ticker: 'BTC', icon: 'img/currencies/Bitcoin.png'},
+        { name: 'Ethereum', ticker: 'ETH', icon: 'img/currencies/Ethereum.png'},
+        { name: 'ERC20', ticker:'ERC20', icon: 'img/currencies/Ethereum.png'},
+        { name: 'Ripple', ticker: 'XRP', icon: 'img/currencies/Ripple.png'},
+        { name: 'Bitcoincash', ticker: 'BCH', icon: 'img/currencies/Bitcoincash.png'},
+        { name: 'Litecoin', ticker: 'LTC', icon: 'img/currencies/Litecoin.png'},
+        { name: 'Eos', ticker: 'EOS', icon: 'img/currencies/Eos.png'},
+        { name: 'Stellarlumens', ticker: 'XLM', icon: 'img/currencies/Stellarlumens.png'},
+        { name: 'Neo', ticker: 'NEO', icon: 'img/currencies/Neo.png'},
+        { name: 'Iota', ticker: 'IOT', icon: 'img/currencies/Iota.png'},
         { name: 'Monero', ticker: 'XMR', icon: 'img/currencies/Monero.png'},
         { name: 'Dash', ticker: 'DASH', icon: 'img/currencies/Dash.png'},
         { name: 'Nem', ticker: 'XEM', icon: 'img/currencies/Nem.png'},
@@ -93,147 +93,195 @@
         { name: 'Adex', ticker: 'ADX', icon: 'img/currencies/Adex.png'},
         { name: 'Singulardtv', ticker: 'SNGLS', icon: 'img/currencies/Singulardtv.png'},
         { name: 'Ethos', ticker: 'BQX', icon: 'img/currencies/Ethos.png'},
+        { name: 'Ethos', ticker: 'ETHOS', icon: 'img/currencies/Ethos.png'},
         { name: 'Ardor', ticker: 'ARDR', icon: 'img/currencies/Ardor.png'},
         { name: 'Reddcoin', ticker: 'RDD', icon: 'img/currencies/Reddcoin.png'},
         { name: 'Fairgame', ticker: 'FAIR', icon: 'img/currencies/Fairgame.png'},
         { name: 'Gas', ticker: 'GAS', icon: 'img/currencies/Gas.png'},
         { name: 'Civic', ticker: 'CVC', icon: 'img/currencies/Civic.png'},
         { name: 'Nxt', ticker: 'NXT', icon: 'img/currencies/Nxt.png'},
-        { name: 'Bytecoin', ticker: 'BCN', icon: 'img/currencies/Bytecoin.png'}
+        { name: 'Bytecoin', ticker: 'BCN', icon: 'img/currencies/Bytecoin.png'},
+        { name: 'Tenx', ticker: 'PAY', icon: 'img/currencies/Tenx.png'},
+        { name: 'Request', ticker: 'REQ', icon: 'img/currencies/Request.png'},
+        { name: 'Digibyte', ticker: 'DGB', icon: 'img/currencies/Digibyte.png'},
+        { name: 'Komodo', ticker: 'KMD', icon: 'img/currencies/Komodo.png'},
+        { name: 'Qash', ticker: 'QASH', icon: 'img/currencies/Qash.png'},
+        { name: 'Ark', ticker: 'ARK', icon: 'img/currencies/Ark.png'},
+        { name: 'Pivx', ticker: 'PIVX', icon: 'img/currencies/Pivx.png'},
+        { name: 'Augur', ticker: 'REP', icon: 'img/currencies/Augur.png'},
+        { name: 'Funfair', ticker: 'FUN', icon: 'img/currencies/Funfair.png'},
+        { name: 'Syscoin', ticker: 'SYS', icon: 'img/currencies/Syscoin.png'},
+        { name: 'Superbitcoin', ticker: 'SBTC', icon: 'img/currencies/Superbitcoin.png'},
+        { name: 'Decent', ticker: 'DCT', icon: 'img/currencies/Decent.png'},
+        { name: 'Callisto', ticker: 'CLO', icon: 'img/currencies/Callisto.png'},
+        { name: 'Decred', ticker: 'DCR', icon: 'img/currencies/Decred.png'},
+        { name: 'Gamecredits', ticker: 'GAME', icon: 'img/currencies/Gamecredits.png'},
+        { name: 'Peercoin', ticker: 'PPC', icon: 'img/currencies/Decred.png'},
+        { name: 'Gridcoin', ticker: 'GRC', icon: 'img/currencies/Gridcoin.png'},
+        { name: 'Blackcoin', ticker: 'BLK', icon: 'img/currencies/Blackcoin.png'},
+        { name: 'Aragon', ticker: 'ANT', icon: 'img/currencies/Aragon.png'},
+        { name: 'Maker', ticker: 'MKR', icon: 'img/currencies/Maker.png'},
+        { name: 'Counterparty', ticker: 'XCP', icon: 'img/currencies/Counterparty.png'},
+        { name: 'Bitcrystals', ticker: 'BCY', icon: 'img/currencies/Bitcrystals.png'},
+        { name: 'Foldingcoin', ticker: 'FLDC', icon: 'img/currencies/Foldingcoin.png'},
+        { name: 'Swarm', ticker: 'SWM', icon: 'img/currencies/Swarm.png'},
+        { name: 'Omni', ticker: 'OMNI', icon: 'img/currencies/Omni.png'},
+        { name: 'Tether', ticker: 'USDT', icon: 'img/currencies/Tether.png'},
+        { name: 'Vertcoin', ticker: 'VTC', icon: 'img/currencies/Vertcoin.png'},
+        { name: 'Maidsafecoin', ticker: 'MAID', icon: 'img/currencies/Maidsafecoin.png'},
+        { name: 'Factom', ticker: 'FCT', icon: 'img/currencies/Factom.png'},
+        { name: 'Nexus', ticker: 'NXS', icon: 'img/currencies/Nexus.png'},
+        { name: 'Zcoin', ticker: 'XZC', icon: 'img/currencies/Zcoin.png'},
+        { name: 'Rise', ticker: 'RISE', icon: 'img/currencies/Rise.png'},
+        { name: 'Safeexchange', ticker: 'SAFEX', icon: 'img/currencies/Safeexchange.png'},
+        { name: 'Lbrycredit', ticker: 'LBC', icon: 'img/currencies/Lbrycredit.png'},
+        { name: 'Paycoin_xpy', ticker: 'XPY', icon: 'img/currencies/Paycoin_xpy.png'},
+        { name: 'Primecoin', ticker: 'XPM', icon: 'img/currencies/PrimeCoin.png'},
+        { name: 'Emercoin', ticker: 'EMC', icon: 'img/currencies/Emercoin.png'},
+        { name: 'Namecoin', ticker: 'NMC', icon: 'img/currencies/Namecoin.png'},
+        { name: 'Quark', ticker: 'QRK', icon: 'img/currencies/Quark.png'},
+        { name: 'Terracoin', ticker: 'TRC', icon: 'img/currencies/Terracoin.png'},
+        { name: 'Chronos', ticker: 'CRX', icon: 'img/currencies/Chronos.png'},
+        { name: 'Argentum', ticker: 'ARG', icon: 'img/currencies/Argentum.png'},
+        { name: 'Dollarcoin', ticker: 'DLC', icon: 'img/currencies/Dollarcoin.png'},
+        { name: 'Mastertradercoin', ticker: 'MTR', icon: 'img/currencies/Mastertradercoin.png'},
+        { name: 'Goldblocks', ticker: 'GB', icon: 'img/currencies/Goldblocks.png'},
+        { name: 'Shilling', ticker: 'SH', icon: 'img/currencies/Shilling.png'},
+        { name: 'Ubiq', ticker: 'UBQ', icon: 'img/currencies/Ubiq.png'},
+        { name: 'Zayedcoin', ticker: 'ZYD', icon: 'img/currencies/Zayed.png'},
+        { name: 'Obsidian', ticker: 'ODN', icon: 'img/currencies/Obsidian.png'},
+        { name: 'Potcoin', ticker: 'POT', icon: 'img/currencies/Potcoin.png'},
+        { name: 'Vslice', ticker: 'VSL', icon: 'img/currencies/Vslice.png'},
+        { name: 'Virtacoin', ticker: 'VTA', icon: 'img/currencies/Virtacoin.png'},
+        { name: 'Ubiq', ticker: 'UBQ', icon: 'img/currencies/Ubiq.png'}
 
-
-
-    ]
+    ];
 
     var wallets = [
-        { id: 1, name: 'Guarda', icon: 'img/guarda_wallet.jpg', url: 'https://guarda.co/app',
-            currencies: ['ETH', 'BCH', 'BTC', 'QTCM', 'LTC', 'BTG', 'SBTC', 'DCT', 'BTS', 'ERC20', 'CLO', 'ZEC', 'XRP', 'DOGE', 'DASH']},
-        { id: 2, name: 'myEther', icon: 'img/myetherwallet.png', url: 'https://www.myetherwallet.com/',
+        { name: 'Guarda', icon: 'img/wallets/guarda_wallet.jpg', url: 'https://guarda.co/app',
+            currencies: ['ETH', 'BCH', 'BTC', 'QTUM', 'LTC', 'BTG', 'SBTC', 'DCT', 'BTS', 'ERC20', 'CLO', 'ZEC', 'XRP', 'DOGE', 'DASH']},
+        { name: 'myEther', icon: 'img/wallets/myetherwallet.png', url: 'https://www.myetherwallet.com/',
             currencies: ['ETH', 'ERC20']},
-        { id: 3, name: 'Luno', icon: 'img/luno.png', url: 'https://www.luno.com/en/signup',
+        { name: 'Luno', icon: 'img/wallets/luno.png', url: 'https://www.luno.com/en/signup',
             currencies: ['ETH', 'BTC']},
-        { id: 4, name: 'Blockchain Wallet', icon: 'img/blockchain.png', url: 'https://blockchain.info/wallet/#/login',
+        { name: 'Blockchain Wallet', icon: 'img/wallets/blockchain.png', url: 'https://blockchain.info/wallet/#/login',
             currencies: ['BTC', 'BCH', 'ETH']},
-        { id: 5, name: 'BitPanda', icon: 'img/bitpanda.jpg', url: 'https://www.bitpanda.com/users/login',
+        { name: 'BitPanda', icon: 'img/wallets/bitpanda.jpg', url: 'https://www.bitpanda.com/users/login',
             currencies: ['BTC', 'ETH', 'LTC', 'DASH', 'XRP', 'BCH']},
-        { id: 6, name: 'BTC Wallet', icon: 'img/btccom.png', url: 'https://wallet.btc.com/#/setup/login',
+        { name: 'BTC Wallet', icon: 'img/wallets/btccom.png', url: 'https://wallet.btc.com/#/setup/login',
             currencies: ['BCH', 'BTC']},
-        { id: 7, name: 'Block.io Wallet', icon: 'img/blockio.png', url: 'https://block.io/users/sign_in',
+        { name: 'Block.io Wallet', icon: 'img/wallets/blockio.png', url: 'https://block.io/users/sign_in',
             currencies: ['BTC', 'LTC', 'DOGE']},
-        { id: 8, name: 'Bitforx Wallet', icon: 'img/bitforx_wallet.png', url: 'https://bitforx.com/users/sign_in',
+        { name: 'Bitforx Wallet', icon: 'img/wallets/bitforx_wallet.png', url: 'https://bitforx.com/users/sign_in',
             currencies: ['BTC']},
-        { id: 9, name: 'Holy Transaction', icon: 'img/holytransaction.png', url: 'https://holytransaction.com/app#!/signin',
+        { name: 'Holy Transaction', icon: 'img/wallets/holytransaction.png', url: 'https://holytransaction.com/app#!/signin',
             currencies: ['BTC', 'LTC', 'DOGE', 'DASH', 'ETH', 'DCR', 'ZEC', 'SYS', 'FAIR', 'GAME', 'PPC', 'GRC', 'BLK']},
-        { id: 10, name: 'EtherLi Waller', icon: 'img/etherli_wallet.png', url: 'https://www.ether.li/login',
+        { name: 'EtherLi Waller', icon: 'img/wallets/etherli_wallet.png', url: 'https://www.ether.li/login',
             currencies: ['ETH']},
-        { id: 11, name: 'Lumi Wallet', icon: 'img/lumiwallet.png', url: 'https://web.lumiwallet.com/auth',
+        { name: 'Lumi Wallet', icon: 'img/wallets/lumiwallet.png', url: 'https://web.lumiwallet.com/auth',
             currencies: ['BTC', 'ETH', 'ERC20']},
-        { id: 12, name: 'Bonpay', icon: 'img/bonpay.png', url: 'https://my.bonpay.com/',
+        { name: 'Bonpay', icon: 'img/wallets/bonpay.png', url: 'https://my.bonpay.com/',
             currencies: ['BTC']},
-        { id: 13, name: 'Coinfy Wallet', icon: 'img/coinfy.png', url: 'https://coinfy.com/',
+        { name: 'Coinfy Wallet', icon: 'img/wallets/coinfy.png', url: 'https://coinfy.com/',
             currencies: ['BTC', 'ETH', 'ZRX', 'ANT', 'REP', 'BAT', 'BNB', 'EOS', 'ETHOS', 'FUN', 'GNT', 'KNC', 'MKR', 'OMG', 'QASH', 'QTUM', 'REQ', 'SALT', 'SNT', 'TRX']},
-        { id: 14, name: 'Bitwala', icon: 'img/bitwala.png', url: 'https://my.bitwala.com/login',
+        { name: 'Bitwala', icon: 'img/wallets/bitwala.png', url: 'https://my.bitwala.com/login',
             currencies: ['BTC']},
-        { id: 15, name: 'LiteVault', icon: 'img/litevault.png', url: 'https://www.litevault.net/wallet/login',
+        { name: 'LiteVault', icon: 'img/wallets/litevault.png', url: 'https://www.litevault.net/wallet/login',
             currencies: ['LTC']},
-        { id: 16, name: 'WageCan Wallet', icon: 'img/wagecan.png', url: 'https://www.wagecan.com/',
+        { name: 'WageCan Wallet', icon: 'img/wallets/wagecan.png', url: 'https://www.wagecan.com/',
             currencies: ['BTC']},
-        { id: 17, name: 'SingularDTV Light Wallet', icon: 'img/sngls.png', url: 'https://wallet.singulardtv.com/lightwallet#',
+        { name: 'SingularDTV Light Wallet', icon: 'img/wallets/sngls.png', url: 'https://wallet.singulardtv.com/lightwallet#',
             currencies: ['ETH', 'SNGLS']},
-        { id: 18, name: 'Counterwallet', icon: 'img/xcp.png', url: 'https://counterwallet.io/',
+        { name: 'Counterwallet', icon: 'img/wallets/xcp.png', url: 'https://counterwallet.io/',
             currencies: ['BTC', 'XCP', 'BCY', 'FLDC', 'STORJ', 'SWM']},
-        { id: 19, name: 'Exarpy Wallet', icon: 'img/exarpy.png', url: 'https://exarpy.com/login',
+        { name: 'Exarpy Wallet', icon: 'img/wallets/exarpy.png', url: 'https://exarpy.com/login',
             currencies: ['XRP']},
-        { id: 20, name: 'DogeChain', icon: 'img/doge.png', url: 'https://my.dogechain.info/#/overview',
+        { name: 'DogeChain', icon: 'img/wallets/doge.png', url: 'https://my.dogechain.info/#/overview',
             currencies: ['DOGE']},
-        { id: 21, name: 'iPayYou', icon: 'img/ipayyou.png', url: 'https://wallet.ipayyou.io/Login',
+        { name: 'iPayYou', icon: 'img/wallets/ipayyou.png', url: 'https://wallet.ipayyou.io/Login',
             currencies: ['BTC']},
-        { id: 22, name: 'Bitgo Wallet', icon: 'img/bitgo.png', url: 'https://www.bitgo.com/login',
+        { name: 'Bitgo Wallet', icon: 'img/wallets/bitgo.png', url: 'https://www.bitgo.com/login',
             currencies: ['BTC', 'BCH', 'BTG', 'XRP', 'LTC', 'ETH']},
-        { id: 23, name: 'Unocoin', icon: 'img/unocoin.png', url: 'https://www.unocoin.com/signin',
+        { name: 'Unocoin', icon: 'img/wallets/unocoin.png', url: 'https://www.unocoin.com/signin',
             currencies: ['BTC']},
-        { id: 24, name: 'Stellarport', icon: 'img/stellarportwallet.png', url: 'https://portal.stellarport.io/login/keystore-file',
+        { name: 'Stellarport', icon: 'img/wallets/stellarportwallet.png', url: 'https://portal.stellarport.io/login/keystore-file',
             currencies: ['XLM']},
-        { id: 25, name: 'OpenLedger', icon: 'img/openledger-blue.png', url: 'https://bitshares.openledger.info/',
+        { name: 'OpenLedger', icon: 'img/wallets/openledger-blue.png', url: 'https://bitshares.openledger.info/',
             currencies: ['BTS']},
-        { id: 26, name: 'ArcBit', icon: 'img/arcbit.png', url: 'https://arcbit.io/',
+        { name: 'ArcBit', icon: 'img/wallets/arcbit.png', url: 'https://arcbit.io/',
             currencies: ['BTC']},
-        { id: 27, name: 'SpectroCoin', icon: 'img/spectrocoin.png', url: 'https://spectrocoin.com/en/login.html',
-            currencies: ['BTC', 'ETH', 'NEM', 'DASH']},
-        { id: 28, name: 'CoinCorner', icon: 'img/coincorner.png', url: 'https://www.coincorner.com/Login',
+        { name: 'SpectroCoin', icon: 'img/wallets/spectrocoin.png', url: 'https://spectrocoin.com/en/login.html',
+            currencies: ['BTC', 'ETH', 'XEM', 'DASH']},
+        { name: 'CoinCorner', icon: 'img/wallets/coincorner.png', url: 'https://www.coincorner.com/Login',
             currencies: ['BTC']},
-        { id: 29, name: 'Green Address', icon: 'img/green-address.png', url: 'https://chrome.google.com/webstore/detail/greenaddress/dgbimgjoijjemhdamicmljbncacfndmp?utm_source=inline-install-disabled',
+        { name: 'Green Address', icon: 'img/wallets/green-address.png', url: 'https://chrome.google.com/webstore/detail/greenaddress/dgbimgjoijjemhdamicmljbncacfndmp?utm_source=inline-install-disabled',
             currencies: ['BTC']},
-        { id: 30, name: 'OmniWallet', icon: 'img/omni.png', url: 'https://www.omniwallet.org/',
+        { name: 'OmniWallet', icon: 'img/wallets/omni.png', url: 'https://www.omniwallet.org/',
             currencies: ['BTC', 'OMNI']},
-        { id: 31, name: 'CoinSpot', icon: 'img/coinspotau.png', url: 'https://www.coinspot.com.au/login',
-            currencies: ['BTC', 'LTC', 'DOGE', 'DASH', 'ETH', 'BCH', 'XRP', 'NEO', 'XEM', 'XMR', 'ETC', 'IOT', 'QTUM', 'OMG', 'ZEC', 'LSK', 'USDT', 'XLM', 'EOS', 'WAVES', 'BCN', 'STRAT', 'KMD', 'STEEM', 'ARDR', 'ARK', 'REP', 'VTC', 'GNT', 'PAY', 'MAID', 'BAT', 'KNC', 'PIVX', 'SALT', 'FCT', 'GAME', 'SC', 'CVC', 'MTL', 'XVG', 'DGB', 'FUN', 'NXS', 'NXT', 'MCO', 'BQX', 'ZVC', 'ADX', 'RISE', 'RDD', 'PPC', 'ENG', 'SAFEX', 'LBC', 'POWR', 'BTG']},
-        { id: 32, name: 'Coinbase Wallet', icon: 'img/coinbase.png', url: 'https://www.coinbase.com/join',
+        { name: 'CoinSpot', icon: 'img/wallets/coinspotau.png', url: 'https://www.coinspot.com.au/login',
+            currencies: ['BTC', 'LTC', 'DOGE', 'DASH', 'ETH', 'BCH', 'XRP', 'NEO', 'XEM', 'XMR', 'ETC', 'IOT', 'QTUM', 'OMG', 'ZEC', 'LSK', 'USDT', 'XLM', 'EOS', 'WAVES', 'BCN', 'STRAT', 'KMD', 'STEEM', 'ARDR', 'ARK', 'REP', 'VTC', 'GNT', 'PAY', 'MAID', 'BAT', 'KNC', 'PIVX', 'SALT', 'FCT', 'GAME', 'SC', 'CVC', 'MTL', 'XVG', 'DGB', 'FUN', 'NXS', 'NXT', 'MCO', 'BQX', 'XZC', 'ADX', 'RISE', 'RDD', 'PPC', 'ENG', 'SAFEX', 'LBC', 'POWR', 'BTG']},
+        { name: 'Coinbase Wallet', icon: 'img/wallets/coinbase.png', url: 'https://www.coinbase.com/join',
             currencies: ['BTC', 'ETH', 'LTC', 'ETC', 'BCH']},
-        { id: 33, name: 'Cryptonator', icon: 'img/cryptonator.png', url: 'https://www.cryptonator.com/auth/signin/',
+        { name: 'Cryptonator', icon: 'img/wallets/cryptonator.png', url: 'https://www.cryptonator.com/auth/signin/',
             currencies: ['LTC', 'BTC', 'BLK', 'DOGE', 'XPY', 'PPC', 'RDD', 'VTC', 'DASH', 'XPM', 'EMC', 'ZEC', 'BCH', 'BCN', 'ETH', 'ETC', 'XMR', 'XRP']},
-        { id: 34, name: 'CoinVault', icon: 'img/coinvault.png', url: 'https://www.coinvault.io/Account/Login',
-            currencies: ['BTC', 'LTC', 'DASH', 'DOGE', 'GRC', 'NMC', 'PPC', 'QRK', 'RDD', 'TRC', 'XPM', 'CRX', 'STRAT', 'ARG', 'DLC', 'MTR', 'GB', 'SH', 'UBIQ', 'ZYD', 'ODN', 'LBRTS']},
-        { id: 35, name: 'WageCan Wallet', icon: 'img/wagecan.png', url: 'https://www.wagecan.com/',
+        { name: 'CoinVault', icon: 'img/wallets/coinvault.png', url: 'https://www.coinvault.io/Account/Login',
+            currencies: ['BTC', 'LTC', 'DASH', 'DOGE', 'GRC', 'NMC', 'PPC', 'QRK', 'RDD', 'TRC', 'XPM', 'CRX', 'STRAT', 'ARG', 'DLC', 'MTR', 'GB', 'SH', 'UBIQ', 'ZYD', 'ODN']},
+        { name: 'WageCan Wallet', icon: 'img/wallets/wagecan.png', url: 'https://www.wagecan.com/',
             currencies: ['BTC']},
-        { id: 36, name: 'Circle Bitcoin Wallet', icon: 'img/circle-bitcoin-wallet.png', url: 'https://www.circle.com/signin',
+        { name: 'Circle Bitcoin Wallet', icon: 'img/wallets/circle-bitcoin-wallet.png', url: 'https://www.circle.com/signin',
             currencies: ['BTC']},
-        { id: 37, name: 'Xapo Wallet', icon: 'img/xapo.png', url: 'https://account.xapo.com/',
+        { name: 'Xapo Wallet', icon: 'img/wallets/xapo.png', url: 'https://account.xapo.com/',
             currencies: ['BTC']},
-        { id: 38, name: 'Gatehub', icon: 'img/gatehub.png', url: 'https://signin.gatehub.net/',
+        { name: 'Gatehub', icon: 'img/wallets/gatehub.png', url: 'https://signin.gatehub.net/',
             currencies: ['BTC', 'XRP', 'ETH', 'ETC', 'REP']},
-        { id: 39, name: 'MyMonero Wallet', icon: 'img/mymonero.png', url: 'https://mymonero.com/#/',
+        { name: 'MyMonero Wallet', icon: 'img/wallets/mymonero.png', url: 'https://mymonero.com/#/',
             currencies: ['XMR']},
-        { id: 40, name: 'NEVERDIE Wallet', icon: 'img/neverdie_wallet.png', url: 'https://neverdie.io/wallet.html',
+        { name: 'NEVERDIE Wallet', icon: 'img/wallets/neverdie_wallet.png', url: 'https://neverdie.io/wallet.html',
             currencies: ['ETH']},
-        { id: 41, name: 'Noku Wallet', icon: 'img/noku.png', url: 'https://wallet.noku.io/',
+        { name: 'Noku Wallet', icon: 'img/wallets/noku.png', url: 'https://wallet.noku.io/',
             currencies: ['ETH']},
-        { id: 42, name: 'Akchex Wallet', icon: 'img/axche.jpg', url: 'https://akche.io/',
+        { name: 'Akchex Wallet', icon: 'img/wallets/axche.jpg', url: 'https://akche.io/',
             currencies: ['WAVES']},
-        { id: 43, name: 'FrostByte Wallet', icon: 'img/frostbyte.png', url: 'https://www.frostbytewallet.io/',
+        { name: 'FrostByte Wallet', icon: 'img/wallets/frostbyte.png', url: 'https://www.frostbytewallet.io/',
             currencies: ['ETH', 'ERC20']},
-        { id: 44, name: 'Poseidon Web Wallet', icon: 'img/psd.jpg', url: 'https://www.poseidonwallet.com/',
-            currencies: ['PSD']},
-        { id: 45, name: 'PotWallet', icon: 'img/potwallet.png', url: 'https://potwallet.com/login',
+        { name: 'PotWallet', icon: 'img/wallets/potwallet.png', url: 'https://potwallet.com/login',
             currencies: ['POT']},
-        { id: 46, name: 'vSlice Web Wallet', icon: 'img/vslice.jpg', url: 'https://token.vdice.io/',
+        { name: 'vSlice Web Wallet', icon: 'img/wallets/vslice.jpg', url: 'https://token.vdice.io/',
             currencies: ['VSL', 'ETH', 'ETC']},
-        { id: 47, name: 'Sato Wallet', icon: 'img/sato-wallet.jpg', url: 'https://satowallet.com/',
+        { name: 'Sato Wallet', icon: 'img/wallets/sato-wallet.jpg', url: 'https://satowallet.com/',
             currencies: ['BTC', 'ETH', 'LTC', 'ZEC', 'ETC', 'XMR', 'DASH']},
-        { id: 48, name: 'Coinapult Wallet', icon: 'img/coinapult-bitcoin-wallet.png', url: 'https://coinapult.com/login',
+        { name: 'Coinapult Wallet', icon: 'img/wallets/coinapult-bitcoin-wallet.png', url: 'https://coinapult.com/login',
             currencies: ['BTC']},
-        { id: 49, name: 'Toast Wallet', icon: 'img/toast_wallet.jpg', url: 'https://toastwallet.com/',
+        { name: 'Toast Wallet', icon: 'img/wallets/toast_wallet.jpg', url: 'https://toastwallet.com/',
             currencies: ['XRP']},
-        { id: 50, name: 'Bitinka', icon: 'img/bitinka.jpg', url: 'https://bitinka.pe/pe/bitinka/login',
+        { name: 'Bitinka', icon: 'img/wallets/bitinka.jpg', url: 'https://bitinka.pe/pe/bitinka/login',
             currencies: ['BTC', 'ETH', 'LTC', 'XRP']},
-        { id: 51, name: 'Unboxcoin Wallet', icon: 'img/unboxcoin.png', url: 'https://unboxcoin.com/',
+        { name: 'Unboxcoin Wallet', icon: 'img/wallets/unboxcoin.png', url: 'https://unboxcoin.com/',
             currencies: ['BTC']},
-        { id: 52, name: 'VirtaCoinWallet', icon: 'img/vta.png', url: 'https://virtacoinwallet.eu/shopping/Shop/login.php',
+        { name: 'VirtaCoinWallet', icon: 'img/wallets/vta.png', url: 'https://virtacoinwallet.eu/shopping/Shop/login.php',
             currencies: ['VTA']},
-        { id: 53, name: 'MyCrypto', icon: 'img/mycrypto.png', url: 'https://mycrypto.com/#generate-wallet',
+        { name: 'MyCrypto', icon: 'img/wallets/mycrypto.png', url: 'https://mycrypto.com/#generate-wallet',
             currencies: ['ETH', 'ERC20']},
-        { id: 54, name: 'Wirex Wallet', icon: 'img/wirex.png', url: 'https://app.wirexapp.com/log-in',
+        { name: 'Wirex Wallet', icon: 'img/wallets/wirex.png', url: 'https://app.wirexapp.com/log-in',
             currencies: ['BTC']},
-        { id: 55, name: 'ZCash Cockpit UI Wallet', icon: 'img/zec.png', url: 'https://github.com/hellcatz/zcash-cli-cockpit',
+        { name: 'ZCash Cockpit UI Wallet', icon: 'img/wallets/zec.png', url: 'https://github.com/hellcatz/zcash-cli-cockpit',
             currencies: ['ZEC']},
-        { id: 56, name: 'NEO Tracker Wallet', icon: 'img/neotracker_wallet.jpg', url: 'https://neotracker.io/wallet',
+        { name: 'NEO Tracker Wallet', icon: 'img/wallets/neotracker_wallet.jpg', url: 'https://neotracker.io/wallet',
             currencies: ['NEO', 'GAS']},
-        { id: 57, name: 'Zumminer', icon: 'img/zumminer.png', url: 'https://zumminer.com/',
-            currencies: ['BTC', 'ETH', 'DASH', 'ZEC', 'LTC']},
-        { id: 58, name: 'Rutheneum', icon: 'img/rht.jpg', url: 'https://wallet.rutheneum.com/account/login',
-            currencies: ['RHT']}
+        { name: 'Zumminer', icon: 'img/wallets/zumminer.png', url: 'https://zumminer.com/',
+            currencies: ['BTC', 'ETH', 'DASH', 'ZEC', 'LTC']}
     ]
 
-    var allCurrencies = [];
+    // masterListOfCurrencies.forEach((currency) => { assocArray[currency.ticker] = currency; });
 
-    for(var i = 0; i < wallets.length; i++){
-        $.merge(allCurrencies, wallets[i].currencies);
-        $.unique(allCurrencies);
-    }
 
-    console.log("Available currencies = " + allCurrencies.length);
-    console.log("Master list of currencies = " + masterListOfCurrencies.length);
 
+    // var allCurrencies = [];
+    //
+    // for(var i = 0; i < wallets.length; i++){
+    //     $.merge(allCurrencies, wallets[i].currencies);
+    //     $.unique(allCurrencies);
+    // }
 
     Vue.use(VueMaterial.default)
 
@@ -242,7 +290,7 @@
         data: {
             selectedCurrency: null,
             wallets: wallets,
-            currencies: allCurrencies
+            currencies: masterListOfCurrencies
         }
     })
 </script>
