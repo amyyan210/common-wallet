@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/vue-material@beta/dist/theme/default.css">    <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons"/>
+    <link rel="stylesheet" href="styles/styles.css" />
     <title>Wallets</title>
 </head>
 <body>
@@ -15,12 +16,16 @@
 
     <div id="app" class="container">
 
-        <div class="md-layout md-gutter">
-            <div class="md-layout-item row">
+        <h1 align="center">Choose your currency</h1>
+
+        <div class="md-layout md-gutter row">
+            <div class="md-layout-item">
                 <md-field>
                     <label for="currencies">Currencies</label>
                     <md-select v-model="selectedCurrency" name="currencies" id="currencies">
-                        <md-option v-for="currency in currencies" v-bind:value="currency.ticker" v-html="'<div class=&quot;md-avatar md-theme-default&quot;><img src=' + currency.icon + '></div> ' + currency.name + ' (' + currency.ticker + ')'">
+                        <md-option v-for="currency in currencies" v-bind:value="currency.ticker"
+                        v-html="'<div class=&quot;md-avatar md-theme-default md-small&quot;><img src=' +
+                        currency.icon + '></div> ' + currency.name + ' (' + currency.ticker + ')'">
                             {{ currency.name }} ({{ currency.ticker }})
                         </md-option>
                     </md-select>
@@ -29,16 +34,22 @@
 
         </div>
 
-        <md-list class="collection row">
-            <md-list-item v-for="wallet in wallets"
-                v-if="wallet.currencies.indexOf(selectedCurrency) > -1">
-                <md-avatar>
-                    <img v-bind:src="wallet.icon"/>
-                </md-avatar>
-                <p>{{ wallet.name }}</p>
-                <a v-bind:href="wallet.url" target="_blank">Pay</a>
-            </md-list-item>
-        </md-list>
+        <div class="md-layout md-gutter row">
+            <div v-for="wallet in wallets"
+                 v-if="wallet.currencies.indexOf(selectedCurrency) > -1"
+                 class="md-layout-item md-size-25">
+                <a v-bind:href="wallet.url" target="_blank" style="text-decoration: none;">
+                    <md-button class="md-icon-button md-raised md-fab">
+                        <md-avatar class="md-large">
+                            <img v-bind:src="wallet.icon"/>
+                        </md-avatar>
+                    </md-button>
+                    <p>{{ wallet.name }}</p>
+                </a>
+
+            </div>
+        </div>
+
 
     </div>
 
@@ -147,7 +158,6 @@
         { name: 'Mastertradercoin', ticker: 'MTR', icon: 'img/currencies/Mastertradercoin.png'},
         { name: 'Goldblocks', ticker: 'GB', icon: 'img/currencies/Goldblocks.png'},
         { name: 'Shilling', ticker: 'SH', icon: 'img/currencies/Shilling.png'},
-        { name: 'Ubiq', ticker: 'UBQ', icon: 'img/currencies/Ubiq.png'},
         { name: 'Zayedcoin', ticker: 'ZYD', icon: 'img/currencies/Zayed.png'},
         { name: 'Obsidian', ticker: 'ODN', icon: 'img/currencies/Obsidian.png'},
         { name: 'Potcoin', ticker: 'POT', icon: 'img/currencies/Potcoin.png'},
@@ -220,12 +230,12 @@
             currencies: ['BTC', 'OMNI']},
         { name: 'CoinSpot', icon: 'img/wallets/coinspotau.png', url: 'https://www.coinspot.com.au/login',
             currencies: ['BTC', 'LTC', 'DOGE', 'DASH', 'ETH', 'BCH', 'XRP', 'NEO', 'XEM', 'XMR', 'ETC', 'IOT', 'QTUM', 'OMG', 'ZEC', 'LSK', 'USDT', 'XLM', 'EOS', 'WAVES', 'BCN', 'STRAT', 'KMD', 'STEEM', 'ARDR', 'ARK', 'REP', 'VTC', 'GNT', 'PAY', 'MAID', 'BAT', 'KNC', 'PIVX', 'SALT', 'FCT', 'GAME', 'SC', 'CVC', 'MTL', 'XVG', 'DGB', 'FUN', 'NXS', 'NXT', 'MCO', 'BQX', 'XZC', 'ADX', 'RISE', 'RDD', 'PPC', 'ENG', 'SAFEX', 'LBC', 'POWR', 'BTG']},
-        { name: 'Coinbase Wallet', icon: 'img/wallets/coinbase.png', url: 'https://www.coinbase.com/join',
+        { name: 'Coinbase Wallet', icon: 'img/wallets/coinbase.png', url: 'https://www.coinbase.com/signin',
             currencies: ['BTC', 'ETH', 'LTC', 'ETC', 'BCH']},
         { name: 'Cryptonator', icon: 'img/wallets/cryptonator.png', url: 'https://www.cryptonator.com/auth/signin/',
             currencies: ['LTC', 'BTC', 'BLK', 'DOGE', 'XPY', 'PPC', 'RDD', 'VTC', 'DASH', 'XPM', 'EMC', 'ZEC', 'BCH', 'BCN', 'ETH', 'ETC', 'XMR', 'XRP']},
         { name: 'CoinVault', icon: 'img/wallets/coinvault.png', url: 'https://www.coinvault.io/Account/Login',
-            currencies: ['BTC', 'LTC', 'DASH', 'DOGE', 'GRC', 'NMC', 'PPC', 'QRK', 'RDD', 'TRC', 'XPM', 'CRX', 'STRAT', 'ARG', 'DLC', 'MTR', 'GB', 'SH', 'UBIQ', 'ZYD', 'ODN']},
+            currencies: ['BTC', 'LTC', 'DASH', 'DOGE', 'GRC', 'NMC', 'PPC', 'QRK', 'RDD', 'TRC', 'XPM', 'CRX', 'STRAT', 'ARG', 'DLC', 'MTR', 'GB', 'SH', 'UBQ', 'ZYD', 'ODN']},
         { name: 'WageCan Wallet', icon: 'img/wallets/wagecan.png', url: 'https://www.wagecan.com/',
             currencies: ['BTC']},
         { name: 'Circle Bitcoin Wallet', icon: 'img/wallets/circle-bitcoin-wallet.png', url: 'https://www.circle.com/signin',
