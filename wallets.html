@@ -280,8 +280,20 @@
             currencies: ['NEO', 'GAS']},
         { name: 'Zumminer', icon: 'img/wallets/zumminer.png', url: 'https://zumminer.com/',
             currencies: ['BTC', 'ETH', 'DASH', 'ZEC', 'LTC']}
-    ]
+    ];
 
+
+    function getParameterByName(name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    currencyInParam = getParameterByName('currency').toUpperCase();
 
 
     Vue.use(VueMaterial.default)
@@ -289,7 +301,7 @@
     var app = new Vue({
         el: '#app',
         data: {
-            selectedCurrency: null,
+            selectedCurrency: currencyInParam,
             wallets: wallets,
             currencies: masterListOfCurrencies
         }
