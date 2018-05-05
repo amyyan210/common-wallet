@@ -34,9 +34,14 @@
 
         </div>
 
+        <!--if currencyInParam and amountInParam are valid, display -->
+        <span v-bind:value="amount" v-if="amount != null && isValidCurrency">
+            Pay {{amount}} {{selectedCurrency}}
+        </span>
+
         <div class="md-layout md-gutter row">
             <div v-for="wallet in wallets"
-                 v-if="wallet.currencies.indexOf(selectedCurrency) > -1"
+                 v-if="wallet.currencies.indexOf(selectedCurrency) >= 0"
                  class="md-layout-item md-size-25">
                 <a v-bind:href="wallet.url" target="_blank" style="text-decoration: none;">
                     <md-button class="md-icon-button md-raised md-fab">
@@ -293,7 +298,8 @@
         return decodeURIComponent(results[2].replace(/\+/g, " "));
     }
 
-    currencyInParam = getParameterByName('currency').toUpperCase();
+    var currencyInParam = getParameterByName('currency').toUpperCase();
+    var amountInParam = getParameterByName('amount');
 
 
     Vue.use(VueMaterial.default)
@@ -302,8 +308,19 @@
         el: '#app',
         data: {
             selectedCurrency: currencyInParam,
+            amount: amountInParam,
             wallets: wallets,
             currencies: masterListOfCurrencies
+        },
+        computed: {
+            // a computed getter
+            isValidCurrency: function () {
+                for(var i = 0; i < masterListOfCurrencies.length; i++) {
+                    if(masterListOfCurrencies[i].ticker == currencyInParam){
+                        return masterListOfCurrencies[i];
+                    }
+                }
+            }
         }
     })
 </script>
